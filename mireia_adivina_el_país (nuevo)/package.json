@@ -1,0 +1,11 @@
+{
+  "name": "mireia-adivina-pais-europa",
+  "version": "1.0.0",
+  "description": "Juego interactivo para adivinar países de Europa",
+  "scripts": {
+    "dev": "http-server -p 3000 -c-1 --cors -a localhost"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}

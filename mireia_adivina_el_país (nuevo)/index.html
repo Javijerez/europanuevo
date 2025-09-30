@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mireia Adivina el País de Europa</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="header">
+            <h1>🗺️ Mireia Adivina el País de Europa</h1>
+            <div class="stats">
+                <div class="stat">
+                    <span class="label">Puntuación:</span>
+                    <span id="score" class="value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Intentos:</span>
+                    <span id="attempts" class="value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Correctos:</span>
+                    <span id="correct" class="value">0</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="game-layout">
+            <div class="map-section">
+                <div id="map" class="map"></div>
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Cargando mapa de Europa...</p>
+                </div>
+                <div id="map-info" class="map-info hidden">
+                    <p id="selected-text">Haz clic en un país del mapa</p>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <div class="input-group">
+                    <label for="country-input" class="input-label">
+                        ¿Qué país has seleccionado?
+                    </label>
+                    <input 
+                        type="text" 
+                        id="country-input" 
+                        placeholder="Escribe el nombre del país..." 
+                        autocomplete="off"
+                        disabled
+                    >
+                    <button id="validate-btn" class="btn-primary" disabled>
+                        Validar Respuesta
+                    </button>
+                </div>
+
+                <div id="feedback" class="feedback hidden"></div>
+
+                <div class="button-group">
+                    <button id="hint-btn" class="btn-secondary" disabled>
+                        💡 Mostrar Pista
+                    </button>
+                    <button id="reset-btn" class="btn-secondary">
+                        🔄 Reiniciar Juego
+                    </button>
+                </div>
+
+                <div class="instructions">
+                    <h3>🎯 Instrucciones</h3>
+                    <ul>
+                        <li>Haz clic en cualquier país del mapa</li>
+                        <li>Escribe el nombre del país seleccionado</li>
+                        <li>Presiona "Validar Respuesta" o Enter</li>
+                        <li>Gana 10 puntos por cada respuesta correcta</li>
+                        <li>Usa pistas si necesitas ayuda</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="data.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
