@@ -1,6 +1,128 @@
 class EuropeGame {
     constructor() {
-        this.countries = [];
+        this.countries = [
+            {
+                name: "España",
+                flag: "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Francia",
+                flag: "https://images.unsplash.com/photo-1502602898536-47ad22581b52?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Italia",
+                flag: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Alemania",
+                flag: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Reino Unido",
+                flag: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Portugal",
+                flag: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Países Bajos",
+                flag: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Bélgica",
+                flag: "https://images.unsplash.com/photo-1559113409-c3092ca9e2f4?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Suiza",
+                flag: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Austria",
+                flag: "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Suecia",
+                flag: "https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Noruega",
+                flag: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Dinamarca",
+                flag: "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Finlandia",
+                flag: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Polonia",
+                flag: "https://images.unsplash.com/photo-1544550285-f813152fb2fd?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "República Checa",
+                flag: "https://images.unsplash.com/photo-1541849546-216549ae216d?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Hungría",
+                flag: "https://images.unsplash.com/photo-1565969308534-0999769c8e69?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Grecia",
+                flag: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Croacia",
+                flag: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Rumania",
+                flag: "https://images.unsplash.com/photo-1605540436563-5bca919ae766?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Bulgaria",
+                flag: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Eslovenia",
+                flag: "https://images.unsplash.com/photo-1564758564527-b97d79ba8c9b?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Eslovaquia",
+                flag: "https://images.unsplash.com/photo-1541849546-216549ae216d?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Estonia",
+                flag: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Letonia",
+                flag: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Lituania",
+                flag: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Irlanda",
+                flag: "https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Islandia",
+                flag: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Luxemburgo",
+                flag: "https://images.unsplash.com/photo-1559113409-c3092ca9e2f4?w=300&h=200&fit=crop&q=80"
+            },
+            {
+                name: "Malta",
+                flag: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop&q=80"
+            }
+        ];
+        
         this.currentQuestionIndex = 0;
         this.score = 0;
         this.correctAnswers = 0;
@@ -9,75 +131,7 @@ class EuropeGame {
         this.selectedAnswer = null;
         
         this.initializeElements();
-        this.loadCountriesData();
-    }
-
-    async loadCountriesData() {
-        try {
-            console.log('Cargando datos de países...');
-            
-            // Verificar si countriesData ya existe (cargado desde data.js)
-            if (typeof countriesData !== 'undefined' && countriesData.length > 0) {
-                console.log('Datos cargados desde data.js:', countriesData.length, 'países');
-                this.countries = countriesData;
-                this.startGame();
-                return;
-            }
-            
-            // Si no existe, intentar cargar dinámicamente
-            const response = await fetch('./data.js');
-            if (response.ok) {
-                const text = await response.text();
-                // Evaluar el contenido del archivo para obtener countriesData
-                eval(text);
-                if (typeof countriesData !== 'undefined') {
-                    this.countries = countriesData;
-                    console.log('Datos cargados dinámicamente:', this.countries.length, 'países');
-                    this.startGame();
-                } else {
-                    throw new Error('countriesData no encontrado después de cargar data.js');
-                }
-            } else {
-                throw new Error('No se pudo cargar data.js');
-            }
-        } catch (error) {
-            console.error('Error cargando datos:', error);
-            this.showError('Error cargando el juego. Por favor, recarga la página.');
-        }
-    }
-
-    showError(message) {
-        const errorDiv = document.createElement('div');
-        errorDiv.style.cssText = `
-            background: #f44336;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px;
-            text-align: center;
-            font-size: 1.1rem;
-        `;
-        errorDiv.textContent = message;
-        
-        const container = document.querySelector('.game-container');
-        container.innerHTML = '';
-        container.appendChild(errorDiv);
-        
-        // Botón para recargar
-        const reloadBtn = document.createElement('button');
-        reloadBtn.textContent = '🔄 Recargar';
-        reloadBtn.style.cssText = `
-            background: white;
-            color: #f44336;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
-        `;
-        reloadBtn.onclick = () => window.location.reload();
-        errorDiv.appendChild(reloadBtn);
+        this.startGame();
     }
 
     initializeElements() {
@@ -104,12 +158,6 @@ class EuropeGame {
     }
 
     startGame() {
-        if (!this.countries || this.countries.length === 0) {
-            console.error('No hay datos de países disponibles');
-            this.showError('No se pudieron cargar los datos del juego.');
-            return;
-        }
-
         console.log('Iniciando juego...', this.countries.length, 'países disponibles');
         this.currentQuestionIndex = 0;
         this.score = 0;
@@ -141,18 +189,7 @@ class EuropeGame {
         if (this.flagImage) {
             this.flagImage.src = currentQuestion.flag;
             this.flagImage.alt = `Bandera de ${currentQuestion.name}`;
-            
-            // Manejar error de carga de imagen
-            this.flagImage.onerror = () => {
-                console.error('Error cargando bandera:', currentQuestion.flag);
-                this.flagImage.alt = `⚠️ Error cargando bandera de ${currentQuestion.name}`;
-                this.flagImage.style.display = 'none';
-            };
-            
-            this.flagImage.onload = () => {
-                console.log('Bandera cargada correctamente:', currentQuestion.name);
-                this.flagImage.style.display = 'block';
-            };
+            this.flagImage.style.display = 'block';
         }
         
         // Actualizar stats
