@@ -1,6 +1,6 @@
 class EuropeGame {
     constructor() {
-        this.countries = countriesData;
+        this.countries = [];
         this.currentQuestionIndex = 0;
         this.score = 0;
         this.correctAnswers = 0;
@@ -9,7 +9,75 @@ class EuropeGame {
         this.selectedAnswer = null;
         
         this.initializeElements();
-        this.startGame();
+        this.loadCountriesData();
+    }
+
+    async loadCountriesData() {
+        try {
+            console.log('Cargando datos de países...');
+            
+            // Verificar si countriesData ya existe (cargado desde data.js)
+            if (typeof countriesData !== 'undefined' && countriesData.length > 0) {
+                console.log('Datos cargados desde data.js:', countriesData.length, 'países');
+                this.countries = countriesData;
+                this.startGame();
+                return;
+            }
+            
+            // Si no existe, intentar cargar dinámicamente
+            const response = await fetch('./data.js');
+            if (response.ok) {
+                const text = await response.text();
+                // Evaluar el contenido del archivo para obtener countriesData
+                eval(text);
+                if (typeof countriesData !== 'undefined') {
+                    this.countries = countriesData;
+                    console.log('Datos cargados dinámicamente:', this.countries.length, 'países');
+                    this.startGame();
+                } else {
+                    throw new Error('countriesData no encontrado después de cargar data.js');
+                }
+            } else {
+                throw new Error('No se pudo cargar data.js');
+            }
+        } catch (error) {
+            console.error('Error cargando datos:', error);
+            this.showError('Error cargando el juego. Por favor, recarga la página.');
+        }
+    }
+
+    showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = `
+            background: #f44336;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        `;
+        errorDiv.textContent = message;
+        
+        const container = document.querySelector('.game-container');
+        container.innerHTML = '';
+        container.appendChild(errorDiv);
+        
+        // Botón para recargar
+        const reloadBtn = document.createElement('button');
+        reloadBtn.textContent = '🔄 Recargar';
+        reloadBtn.style.cssText = `
+            background: white;
+            color: #f44336;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        `;
+        reloadBtn.onclick = () => window.location.reload();
+        errorDiv.appendChild(reloadBtn);
     }
 
     initializeElements() {
@@ -27,19 +95,29 @@ class EuropeGame {
         this.scoreMessage = document.getElementById('scoreMessage');
 
         // Event listeners
-        this.nextButton.addEventListener('click', () => this.nextQuestion());
-        this.restartButton.addEventListener('click', () => this.restartGame());
+        if (this.nextButton) {
+            this.nextButton.addEventListener('click', () => this.nextQuestion());
+        }
+        if (this.restartButton) {
+            this.restartButton.addEventListener('click', () => this.restartGame());
+        }
     }
 
     startGame() {
+        if (!this.countries || this.countries.length === 0) {
+            console.error('No hay datos de países disponibles');
+            this.showError('No se pudieron cargar los datos del juego.');
+            return;
+        }
+
         console.log('Iniciando juego...', this.countries.length, 'países disponibles');
         this.currentQuestionIndex = 0;
         this.score = 0;
         this.correctAnswers = 0;
         this.gameQuestions = this.generateGameQuestions();
         
-        this.questionContainer.style.display = 'block';
-        this.finalScoreContainer.style.display = 'none';
+        if (this.questionContainer) this.questionContainer.style.display = 'block';
+        if (this.finalScoreContainer) this.finalScoreContainer.style.display = 'none';
         
         this.showQuestion();
     }
@@ -60,23 +138,39 @@ class EuropeGame {
         console.log('Mostrando pregunta:', currentQuestion);
         
         // Actualizar la imagen de la bandera
-        this.flagImage.src = currentQuestion.flag;
-        this.flagImage.alt = `Bandera de ${currentQuestion.name}`;
+        if (this.flagImage) {
+            this.flagImage.src = currentQuestion.flag;
+            this.flagImage.alt = `Bandera de ${currentQuestion.name}`;
+            
+            // Manejar error de carga de imagen
+            this.flagImage.onerror = () => {
+                console.error('Error cargando bandera:', currentQuestion.flag);
+                this.flagImage.alt = `⚠️ Error cargando bandera de ${currentQuestion.name}`;
+                this.flagImage.style.display = 'none';
+            };
+            
+            this.flagImage.onload = () => {
+                console.log('Bandera cargada correctamente:', currentQuestion.name);
+                this.flagImage.style.display = 'block';
+            };
+        }
         
         // Actualizar stats
-        this.questionNumberEl.textContent = this.currentQuestionIndex + 1;
-        this.scoreEl.textContent = this.score;
-        this.correctEl.textContent = this.correctAnswers;
+        if (this.questionNumberEl) this.questionNumberEl.textContent = this.currentQuestionIndex + 1;
+        if (this.scoreEl) this.scoreEl.textContent = this.score;
+        if (this.correctEl) this.correctEl.textContent = this.correctAnswers;
         
         // Actualizar barra de progreso
-        const progress = ((this.currentQuestionIndex) / this.totalQuestions) * 100;
-        this.progressBar.style.width = `${progress}%`;
+        if (this.progressBar) {
+            const progress = ((this.currentQuestionIndex) / this.totalQuestions) * 100;
+            this.progressBar.style.width = `${progress}%`;
+        }
         
         // Generar opciones
         this.generateOptions(currentQuestion);
         
         // Ocultar botón siguiente
-        this.nextButton.style.display = 'none';
+        if (this.nextButton) this.nextButton.style.display = 'none';
         this.selectedAnswer = null;
     }
 
@@ -96,16 +190,18 @@ class EuropeGame {
         console.log('Opciones generadas:', allOptions.map(c => c.name));
         
         // Limpiar contenedor de opciones
-        this.optionsContainer.innerHTML = '';
-        
-        // Crear botones de opciones
-        allOptions.forEach(country => {
-            const button = document.createElement('button');
-            button.className = 'option';
-            button.textContent = country.name;
-            button.addEventListener('click', () => this.selectOption(button, country, correctCountry));
-            this.optionsContainer.appendChild(button);
-        });
+        if (this.optionsContainer) {
+            this.optionsContainer.innerHTML = '';
+            
+            // Crear botones de opciones
+            allOptions.forEach(country => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = country.name;
+                button.addEventListener('click', () => this.selectOption(button, country, correctCountry));
+                this.optionsContainer.appendChild(button);
+            });
+        }
     }
 
     selectOption(button, selectedCountry, correctCountry) {
@@ -115,17 +211,19 @@ class EuropeGame {
         console.log('Opción seleccionada:', selectedCountry.name, 'Correcta:', correctCountry.name);
         
         // Deshabilitar todos los botones y mostrar respuestas
-        const allButtons = this.optionsContainer.querySelectorAll('.option');
-        allButtons.forEach(btn => {
-            btn.style.cursor = 'default';
-            if (btn.textContent === correctCountry.name) {
-                btn.classList.add('correct');
-            } else if (btn === button && btn.textContent !== correctCountry.name) {
-                btn.classList.add('incorrect');
-            } else if (btn.textContent !== correctCountry.name) {
-                btn.style.opacity = '0.5';
-            }
-        });
+        if (this.optionsContainer) {
+            const allButtons = this.optionsContainer.querySelectorAll('.option');
+            allButtons.forEach(btn => {
+                btn.style.cursor = 'default';
+                if (btn.textContent === correctCountry.name) {
+                    btn.classList.add('correct');
+                } else if (btn === button && btn.textContent !== correctCountry.name) {
+                    btn.classList.add('incorrect');
+                } else if (btn.textContent !== correctCountry.name) {
+                    btn.style.opacity = '0.5';
+                }
+            });
+        }
         
         // Actualizar puntuación
         if (selectedCountry.name === correctCountry.name) {
@@ -137,7 +235,7 @@ class EuropeGame {
         }
         
         // Mostrar botón siguiente
-        this.nextButton.style.display = 'block';
+        if (this.nextButton) this.nextButton.style.display = 'block';
     }
 
     nextQuestion() {
@@ -149,11 +247,11 @@ class EuropeGame {
     endGame() {
         console.log('Juego terminado. Puntuación final:', this.score);
         
-        this.questionContainer.style.display = 'none';
-        this.finalScoreContainer.style.display = 'block';
+        if (this.questionContainer) this.questionContainer.style.display = 'none';
+        if (this.finalScoreContainer) this.finalScoreContainer.style.display = 'block';
         
         // Mostrar puntuación final
-        this.finalScoreText.textContent = `${this.correctAnswers}/${this.totalQuestions}`;
+        if (this.finalScoreText) this.finalScoreText.textContent = `${this.correctAnswers}/${this.totalQuestions}`;
         
         // Mensaje personalizado según la puntuación
         let message = '';
@@ -171,10 +269,10 @@ class EuropeGame {
             message = '¡Ánimo! 💪 La práctica hace al maestro.';
         }
         
-        this.scoreMessage.textContent = message;
+        if (this.scoreMessage) this.scoreMessage.textContent = message;
         
         // Actualizar barra de progreso al 100%
-        this.progressBar.style.width = '100%';
+        if (this.progressBar) this.progressBar.style.width = '100%';
     }
 
     restartGame() {
